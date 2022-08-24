@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { fetchGetDetailsController } from "../../Redux/ProductApi/getDetailsAction";
 import { Grid, makeStyles, Typography, Box, Avatar } from "@material-ui/core";
 import NavigationIcon from "@mui/icons-material/Navigation";
@@ -117,7 +117,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Product = ({ numInCartHandler, posHandler }) => {
+const Product = ({ setNumItems }) => {
+  const navigate = useNavigate();
   const classes = useStyles();
   const dispatch = useDispatch();
   const detailsInfo = useSelector((state) => state.getDetailsState);
@@ -148,7 +149,7 @@ const Product = ({ numInCartHandler, posHandler }) => {
   }, []);
   const res = detailsInfo && detailsInfo?.result;
   const [hasBargain, setHasBargain] = useState(false);
-  const { book } = res;
+  const { book, general } = res;
   const {
     image_big,
     name,
@@ -162,6 +163,10 @@ const Product = ({ numInCartHandler, posHandler }) => {
   const [itemCount, setItemCount] = useState(
     count_in_user_cart ? count_in_user_cart : 0
   );
+  const { cart_items_count } = general || {};
+  useEffect(() => {
+    setNumItems(cart_items_count);
+  }, [detailsInfo]);
   useEffect(() => {
     setHasBargain(!(price === discounted_price));
   }, []);
@@ -174,16 +179,11 @@ const Product = ({ numInCartHandler, posHandler }) => {
         bid_in_cart: `+|${id}`,
       },
     })
-      .then((res) => console.log(res))
+      .then((res) => setNumItems(res.data.general.cart_items_count))
       .catch((err) => console.log(err));
     setItemCount(itemCount + 1);
-    posHandler(true);
-    numInCartHandler();
   };
   const decrementHandler = () => {
-    setItemCount(itemCount - 1);
-    posHandler(false);
-    numInCartHandler();
     axios({
       method: "post",
       url: `http://Daryaftyar.ir/store/bookslist/id:${341393410}-grade:${gradeParam}-major:${majorParam}-pub:${pubParam}-sort:${sortParam}`,
@@ -192,8 +192,9 @@ const Product = ({ numInCartHandler, posHandler }) => {
         bid_in_cart: `-|${id}`,
       },
     })
-      .then((res) => console.log(res))
+      .then((res) => setNumItems(res.data.general.cart_items_count))
       .catch((err) => console.log(err));
+    setItemCount(itemCount - 1);
   };
   return (
     <>
@@ -207,10 +208,15 @@ const Product = ({ numInCartHandler, posHandler }) => {
             xs={12}
           >
             <Grid item xs={6} className={classes.headerStyle}>
-              <Typography variant="h4">{name}</Typography>
+              <Typography style={{ fontFamily: "IRANSans" }} variant="h4">
+                {name}
+              </Typography>
             </Grid>
             <Grid item xs={6} className={classes.headerStyle}>
-              <NavigationIcon className={classes.iconStyle} />
+              <NavigationIcon
+                className={classes.iconStyle}
+                onClick={() => navigate("/books", { replace: true })}
+              />
             </Grid>
           </Grid>
           <Grid
@@ -235,6 +241,7 @@ const Product = ({ numInCartHandler, posHandler }) => {
                   <>
                     <Grid item xs={6} className={classes.realPrice}>
                       <Typography
+                        style={{ fontFamily: "IRANSans" }}
                         variant="body2"
                         className={classes.priceStyle}
                       >
@@ -243,6 +250,7 @@ const Product = ({ numInCartHandler, posHandler }) => {
                     </Grid>
                     <Grid item xs={6} className={classes.realPrice}>
                       <Typography
+                        style={{ fontFamily: "IRANSans" }}
                         variant="body2"
                         className={classes.discountedPriceStyle}
                       >
@@ -252,7 +260,11 @@ const Product = ({ numInCartHandler, posHandler }) => {
                   </>
                 ) : (
                   <Grid item xs={12} className={classes.realPrice}>
-                    <Typography variant="body2" className={classes.priceStyle}>
+                    <Typography
+                      variant="body2"
+                      style={{ fontFamily: "IRANSans" }}
+                      className={classes.priceStyle}
+                    >
                       {Math.round(price)} تومان
                     </Typography>
                   </Grid>
@@ -260,16 +272,32 @@ const Product = ({ numInCartHandler, posHandler }) => {
               </Grid>
             </Grid>
             <Grid item xs={12} className={classes.explainContainer}>
-              <Typography variant="body2" className={classes.txtStyle}>
+              <Typography
+                style={{ fontFamily: "IRANSans" }}
+                variant="body2"
+                className={classes.txtStyle}
+              >
                 نویسنده : {auther_name}
               </Typography>
-              <Typography variant="body2" className={classes.txtStyle}>
+              <Typography
+                variant="body2"
+                style={{ fontFamily: "IRANSans" }}
+                className={classes.txtStyle}
+              >
                 تعداد صفحات : {pages_count}
               </Typography>
-              <Typography variant="body2" className={classes.txtStyle}>
+              <Typography
+                style={{ fontFamily: "IRANSans" }}
+                variant="body2"
+                className={classes.txtStyle}
+              >
                 :توضیحات
               </Typography>
-              <Typography variant="body2" className={classes.txtStyle}>
+              <Typography
+                variant="body2"
+                style={{ fontFamily: "IRANSans" }}
+                className={classes.txtStyle}
+              >
                 {details}
               </Typography>
             </Grid>
@@ -278,7 +306,11 @@ const Product = ({ numInCartHandler, posHandler }) => {
             <Grid item xs={12} className={classes.txtContainer}>
               {itemCount > 0 && (
                 <>
-                  <Typography variant="body2" className={classes.txtBtn}>
+                  <Typography
+                    variant="body2"
+                    style={{ fontFamily: "IRANSans" }}
+                    className={classes.txtBtn}
+                  >
                     ({itemCount}تعداد)این محصول در سبد خرید شما موجود است
                   </Typography>
                 </>

@@ -153,7 +153,9 @@ const Major = () => {
     <Grid container className={classes.container}>
       <Grid item className={classes.headerContainer} xs={12} container>
         <Grid item xs={6} className={classes.headerStyle}>
-          <Typography variant="h4">کتاب ها</Typography>
+          <Typography style={{ fontFamily: "IRANSans" }} variant="h4">
+            کتاب ها
+          </Typography>
         </Grid>
         <Grid item xs={6} className={classes.headerStyle}>
           <NavigationIcon className={classes.iconStyle} />
@@ -171,7 +173,11 @@ const Major = () => {
               borderRadius: "50px 0 0 50px",
             }}
           >
-            <Link to="/books/grade" className={classes.linkStyle}>
+            <Link
+              to="/books/grade"
+              style={{ fontFamily: "IRANSans" }}
+              className={classes.linkStyle}
+            >
               پایه(
               {selectedMajors.gradeFilter.allSelected
                 ? "همه"
@@ -190,7 +196,11 @@ const Major = () => {
           >
             <Link
               to="/books/major"
-              style={{ color: "rgb(232, 232, 166)", textDecoration: "none" }}
+              style={{
+                fontFamily: "IRANSans",
+                color: "rgb(232, 232, 166)",
+                textDecoration: "none",
+              }}
             >
               تغییر رشته
             </Link>
@@ -205,11 +215,17 @@ const Major = () => {
               borderRadius: "0 50px 50px 0",
             }}
           >
-            انتشارات (
-            {selectedMajors.pubFilter.allSelected
-              ? "همه"
-              : selectedMajors.pubFilter.items.length}
-            )
+            <Link
+              to="/books/publishes"
+              style={{ fontFamily: "IRANSans" }}
+              className={classes.linkStyle}
+            >
+              انتشارات(
+              {selectedMajors.pubFilter.allSelected
+                ? "همه"
+                : selectedMajors.pubFilter.items.length}
+              )
+            </Link>
           </ToggleButton>
         </ToggleButtonGroup>
       </Grid>
@@ -243,8 +259,12 @@ const Major = () => {
           <Grid className={classes.sort} container>
             <NavigationIcon className={classes.sortIcone} />
 
-            <Typography variant="body2" className={classes.parageraphStyle}>
-              save and back
+            <Typography
+              style={{ fontFamily: "IRANSans" }}
+              variant="body2"
+              className={classes.parageraphStyle}
+            >
+              ذخیره و بازگشت
             </Typography>
           </Grid>
         </Card>

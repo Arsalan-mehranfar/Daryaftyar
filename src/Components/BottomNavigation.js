@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function BottomNavigation({ numInCart }) {
+function BottomNavigation({ numItems }) {
   const classes = useStyles();
   return (
     <AppBar position="static" className={classes.container}>
@@ -40,20 +40,32 @@ function BottomNavigation({ numInCart }) {
       <Toolbar>
         <Grid spacing={1} container>
           <Grid item xs={4} className={classes.linkContainer}>
-            <Link to="/card" className={classes.link}>
+            <Link
+              to="/card"
+              className={classes.link}
+              style={{ fontFamily: "IRANSans" }}
+            >
               سبد خرید
             </Link>
-            {numInCart > 0 && (
-              <span className={classes.numStyle}>{numInCart}</span>
+            {numItems > 0 && (
+              <span className={classes.numStyle}>{numItems}</span>
             )}
           </Grid>
           <Grid item xs={4} className={classes.linkContainer}>
-            <Link to="/" className={classes.link}>
+            <Link
+              to="/"
+              className={classes.link}
+              style={{ fontFamily: "IRANSans" }}
+            >
               خانه
             </Link>
           </Grid>
           <Grid item xs={4} className={classes.linkContainer}>
-            <Link to="/bill" className={classes.link}>
+            <Link
+              to="/bill"
+              className={classes.link}
+              style={{ fontFamily: "IRANSans" }}
+            >
               صورتحساب
             </Link>
           </Grid>

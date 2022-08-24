@@ -4,14 +4,14 @@ import { Grid } from "@material-ui/core";
 import { useSelector, useDispatch } from "react-redux";
 import React, { useEffect } from "react";
 import { fecthDataController } from "./Redux/HomeLogin/actionHomeLogin";
-const Home = (props) => {
+const Home = () => {
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.userState);
   useEffect(() => {
     dispatch(fecthDataController(341393410));
   }, []);
   return (
-    <div>
+    <div style={{ fontFamily: "IRANSans" }}>
       {userData.error ? (
         <h4>Something is going wrong</h4>
       ) : userData.loading ? (

@@ -107,8 +107,7 @@ const BookDisplay = ({
   major,
   publish,
   sort,
-  numInCartHandler,
-  posHandler,
+  setNumItems,
 }) => {
   const [hasBargain, setHasBargain] = useState(false);
   const navigate = useNavigate();
@@ -125,16 +124,11 @@ const BookDisplay = ({
         bid_in_cart: `+|${id}`,
       },
     })
-      .then((res) => console.log(res))
+      .then((res) => setNumItems(res.data.general.cart_items_count))
       .catch((err) => console.log(err));
     setItemCount(itemCount + 1);
-    posHandler(true);
-    numInCartHandler();
   };
   const decrementHandler = () => {
-    setItemCount(itemCount - 1);
-    posHandler(false);
-    numInCartHandler();
     axios({
       method: "post",
       url: `http://Daryaftyar.ir/store/bookslist/id:${341393410}-grade:${grade}-major:${major}-pub:${publish}-sort:${sort}`,
@@ -142,8 +136,9 @@ const BookDisplay = ({
         bid_in_cart: `-|${id}`,
       },
     })
-      .then((res) => console.log(res))
+      .then((res) => setNumItems(res.data.general.cart_items_count))
       .catch((err) => console.log(err));
+    setItemCount(itemCount - 1);
   };
   useEffect(() => {
     setHasBargain(!(price === discounted_price));
@@ -172,10 +167,18 @@ const BookDisplay = ({
             />
           </Grid>
           <Grid item xs={12} className={classes.txtContainer}>
-            <Typography variant="body2" className={classes.textStyle}>
+            <Typography
+              variant="body2"
+              style={{ fontFamily: "IRANSans" }}
+              className={classes.textStyle}
+            >
               {pub}:انتشارات
             </Typography>
-            <Typography variant="body2" className={classes.nameStyle}>
+            <Typography
+              variant="body2"
+              className={classes.nameStyle}
+              style={{ fontFamily: "IRANSans" }}
+            >
               {name}
             </Typography>
           </Grid>
@@ -183,7 +186,11 @@ const BookDisplay = ({
             {hasBargain ? (
               <>
                 <Grid item xs={6} className={classes.realPrice}>
-                  <Typography variant="body2" className={classes.priceStyle}>
+                  <Typography
+                    style={{ fontFamily: "IRANSans" }}
+                    variant="body2"
+                    className={classes.priceStyle}
+                  >
                     {Math.round(price)} تومان
                   </Typography>
                 </Grid>

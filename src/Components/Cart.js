@@ -64,7 +64,7 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(3),
   },
 }));
-const Cart = ({ numInCartHandler, posHandler }) => {
+const Cart = ({ setNumItems }) => {
   const navigate = useNavigate();
   const [numItem, setNumItem] = useState(0);
   const classes = useStyles();
@@ -73,7 +73,8 @@ const Cart = ({ numInCartHandler, posHandler }) => {
   useEffect(() => {
     dispatch(fetchCardData(341393410));
   }, [numItem]);
-  const { books_in_cart } = cartData?.result;
+  const { books_in_cart, general } = cartData?.result;
+  const { cart_items_count } = general || {};
   const existanceInCart = books_in_cart?.length;
   const onClickCallBack = () => {
     setNumItem(existanceInCart);
@@ -81,6 +82,9 @@ const Cart = ({ numInCartHandler, posHandler }) => {
   const nextLevelHandler = () => {
     navigate("/card/final", { replace: true });
   };
+  useEffect(() => {
+    setNumItems(cart_items_count);
+  }, [cartData]);
   return (
     <Grid container className={classes.container}>
       <Grid
@@ -91,16 +95,25 @@ const Cart = ({ numInCartHandler, posHandler }) => {
         xs={12}
       >
         <Grid item xs={6} className={classes.headerStyle}>
-          <Typography variant="h4">سبد خرید</Typography>
+          <Typography variant="h4" style={{ fontFamily: "IRANSans" }}>
+            سبد خرید
+          </Typography>
         </Grid>
         <Grid item xs={6} className={classes.headerStyle}>
-          <NavigationIcon className={classes.iconStyle} />
+          <NavigationIcon
+            className={classes.iconStyle}
+            onClick={() => navigate(-1, { raplace: true })}
+          />
         </Grid>
       </Grid>
       {existanceInCart > 0 ? (
         <>
           <Grid item xs={12} className={classes.textContainer}>
-            <Typography variant="body2" className={classes.explainStyle}>
+            <Typography
+              variant="body2"
+              style={{ fontFamily: "IRANSans" }}
+              className={classes.explainStyle}
+            >
               {existanceInCart}محصول در سبد خرید شما موجود است
             </Typography>
           </Grid>
@@ -114,36 +127,42 @@ const Cart = ({ numInCartHandler, posHandler }) => {
             <Grid item xs={12} className={classes.eachItemStyle}>
               {books_in_cart.map((el, index) => (
                 <CardItem
-                  numInCartHandler={numInCartHandler}
-                  posHandler={posHandler}
                   {...el}
                   onClickCallBack={onClickCallBack}
                   key={index}
                   num={index + 1}
+                  setNumItems={setNumItems}
                 />
               ))}
             </Grid>
           </Grid>
+          <Grid item xs={12} className={classes.sortStyle}>
+            <Card className={classes.sortContainer} onClick={nextLevelHandler}>
+              <Grid className={classes.sort} container>
+                <NavigationIcon className={classes.sortIcone} />
+
+                <Typography
+                  variant="body2"
+                  style={{ fontFamily: "IRANSans" }}
+                  className={classes.parageraphStyle}
+                >
+                  مرحله بعد
+                </Typography>
+              </Grid>
+            </Card>
+          </Grid>
         </>
       ) : (
         <Grid item xs={12} className={classes.textContainer}>
-          <Typography variant="body2" className={classes.nullexplainStyle}>
+          <Typography
+            variant="body2"
+            style={{ fontFamily: "IRANSans" }}
+            className={classes.nullexplainStyle}
+          >
             هیچ محصولی در سبد خرید شما موجود نیست
           </Typography>
         </Grid>
       )}
-
-      <Grid item xs={12} className={classes.sortStyle}>
-        <Card className={classes.sortContainer} onClick={nextLevelHandler}>
-          <Grid className={classes.sort} container>
-            <NavigationIcon className={classes.sortIcone} />
-
-            <Typography variant="body2" className={classes.parageraphStyle}>
-              مرحله بعد
-            </Typography>
-          </Grid>
-        </Card>
-      </Grid>
     </Grid>
   );
 };

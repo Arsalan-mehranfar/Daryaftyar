@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Grid, Box, Typography, makeStyles } from "@material-ui/core";
 import { fetchWalletData } from "../../Redux/WalletApi/WalletApiAction";
 import NavigationIcon from "@mui/icons-material/Navigation";
+import { useNavigate } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
   headerStyle: {
     color: "rgb(147, 118, 0)",
@@ -33,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 const Wallet = () => {
+  const navigate = useNavigate();
   const classes = useStyles();
   const dispatch = useDispatch();
   const walletData = useSelector((state) => state.walletState);
@@ -52,36 +54,61 @@ const Wallet = () => {
         xs={12}
       >
         <Grid item xs={6} className={classes.headerStyle}>
-          <Typography variant="h4">کیف پول</Typography>
+          <Typography variant="h4" style={{ fontFamily: "IRANSans" }}>
+            کیف پول
+          </Typography>
         </Grid>
         <Grid item xs={6} className={classes.headerStyle}>
-          <NavigationIcon className={classes.iconStyle} />
+          <NavigationIcon
+            className={classes.iconStyle}
+            onClick={() => navigate("/", { replace: true })}
+          />
         </Grid>
       </Grid>
       <Grid item xs={12} className={classes.contentContainer}>
         <Grid item xs={12} className={classes.boxContainer}>
           <Box className={classes.contentBox}>
             <Grid className={classes.textContainer}>
-              <Typography variant="h4" className={classes.header}>
+              <Typography
+                variant="h4"
+                style={{ fontFamily: "IRANSans" }}
+                className={classes.header}
+              >
                 اعتبار کیف پول
               </Typography>
-              <Typography variant="body2" className={classes.textStyle}>
+              <Typography
+                variant="body2"
+                style={{ fontFamily: "IRANSans" }}
+                className={classes.textStyle}
+              >
                 تومان{credit} | روز تا استفاده{get_expiration_time}
               </Typography>
             </Grid>
             <Grid className={classes.textContainer}>
-              <Typography variant="body2" className={classes.textStyle}>
+              <Typography
+                variant="body2"
+                style={{ fontFamily: "IRANSans" }}
+                className={classes.textStyle}
+              >
                 راه های افزایش اعتبار کیف پول
               </Typography>
             </Grid>
             <Grid className={classes.textContainer}>
-              <Typography variant="body2" className={classes.textStyle}>
+              <Typography
+                variant="body2"
+                style={{ fontFamily: "IRANSans" }}
+                className={classes.textStyle}
+              >
                 دوست خوبم از راه های زیر میتونی اعتبار کسب کنی و در خرید از این
                 فروشگاه ازش استفاده کنی
               </Typography>
             </Grid>
             <Grid className={classes.textContainer}>
-              <Typography variant="body2" className={classes.textStyle}>
+              <Typography
+                variant="body2"
+                style={{ fontFamily: "IRANSans" }}
+                className={classes.textStyle}
+              >
                 با هر بار جواب دادن به سوال دوستات در پرسشکده ربات میتونی 500
                 تومان اعتبار جکع کنی
               </Typography>

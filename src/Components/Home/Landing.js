@@ -113,7 +113,11 @@ const Landing = ({ wallet, general }) => {
           >
             <Grid container spacing={1}>
               <Grid item xs={6} className={classes.leftSideCard}>
-                <Typography variant="body2" className={classes.value}>
+                <Typography
+                  variant="body2"
+                  style={{ fontFamily: "IRANSans" }}
+                  className={classes.value}
+                >
                   <span>
                     <NavigationIcon className={classes.iconStyle} />
                   </span>
@@ -121,10 +125,18 @@ const Landing = ({ wallet, general }) => {
                 </Typography>
               </Grid>
               <Grid item xs={6} className={classes.rightSideCard}>
-                <Typography variant="h4" className={classes.header}>
+                <Typography
+                  variant="h4"
+                  style={{ fontFamily: "IRANSans" }}
+                  className={classes.header}
+                >
                   اعتبار کیف پول
                 </Typography>
-                <Typography variant="body2" className={classes.text}>
+                <Typography
+                  variant="body2"
+                  style={{ fontFamily: "IRANSans" }}
+                  className={classes.text}
+                >
                   {wallet?.credit}تومان | {wallet?.get_expiration_time}روز مهلت
                   تا استفاده
                 </Typography>
@@ -139,7 +151,11 @@ const Landing = ({ wallet, general }) => {
           <Button variant="outlined" className={classes.btnStyle}>
             <Link
               to="/classes"
-              style={{ textDecoration: "none", color: "rgb(147, 118, 0)" }}
+              style={{
+                fontFamily: "IRANSans",
+                textDecoration: "none",
+                color: "rgb(147, 118, 0)",
+              }}
             >
               کلاس ها
             </Link>
@@ -149,7 +165,11 @@ const Landing = ({ wallet, general }) => {
           <Button variant="outlined" className={classes.btnStyle}>
             <Link
               to="/books"
-              style={{ textDecoration: "none", color: "rgb(147, 118, 0)" }}
+              style={{
+                fontFamily: "IRANSans",
+                textDecoration: "none",
+                color: "rgb(147, 118, 0)",
+              }}
             >
               کتاب ها
             </Link>

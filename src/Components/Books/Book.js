@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchBooksController } from "../Redux/BooksApi/booksApiAction";
 import { Typography, Grid, Card, makeStyles } from "@material-ui/core";
@@ -6,7 +6,7 @@ import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import NavigationIcon from "@mui/icons-material/Navigation";
 import BookDisplay from "./BookDisplay";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   headerStyle: {
@@ -63,7 +63,8 @@ const useStyles = makeStyles((theme) => ({
     color: "rgb(232,232,166)",
   },
 }));
-const Book = ({ numInCartHandler, posHandler }) => {
+const Book = ({ setNumItems }) => {
+  const navigate = useNavigate();
   const classes = useStyles();
   const dispatch = useDispatch();
   const bookStore = useSelector((state) => state.userBooks);
@@ -94,15 +95,26 @@ const Book = ({ numInCartHandler, posHandler }) => {
       )
     );
   }, []);
+  const { general } = bookStore?.result;
+  const { cart_items_count } = general || {};
+  console.log(cart_items_count);
+  useEffect(() => {
+    setNumItems(cart_items_count);
+  }, [bookStore]);
   return (
     <>
       <Grid container className={classes.container}>
         <Grid item className={classes.headerContainer} xs={12} container>
           <Grid item xs={6} className={classes.headerStyle}>
-            <Typography variant="h4">کتاب ها</Typography>
+            <Typography style={{ fontFamily: "IRANSans" }} variant="h4">
+              کتاب ها
+            </Typography>
           </Grid>
           <Grid item xs={6} className={classes.headerStyle}>
-            <NavigationIcon className={classes.iconStyle} />
+            <NavigationIcon
+              className={classes.iconStyle}
+              onClick={() => navigate(-1, { replace: true })}
+            />
           </Grid>
         </Grid>
         <Grid item xs={12} className={classes.sortStyle}>
@@ -112,8 +124,16 @@ const Book = ({ numInCartHandler, posHandler }) => {
                 <NavigationIcon className={classes.sortIcone} />
               </Grid>
               <Grid item xs={6} className={classes.txtStyle}>
-                <Typography variant="body2" className={classes.parageraphStyle}>
-                  <Link to="/books/sort" className={classes.linkSortStyle}>
+                <Typography
+                  style={{ fontFamily: "IRANSans" }}
+                  ariant="body2"
+                  className={classes.parageraphStyle}
+                >
+                  <Link
+                    to="/books/sort"
+                    style={{ fontFamily: "IRANSans" }}
+                    className={classes.linkSortStyle}
+                  >
                     مرتب سازی بر اساس :{name}
                   </Link>
                 </Typography>
@@ -136,7 +156,11 @@ const Book = ({ numInCartHandler, posHandler }) => {
                 borderRadius: "50px 0 0 50px",
               }}
             >
-              <Link to="/books/grade" className={classes.linkStyle}>
+              <Link
+                to="/books/grade"
+                style={{ fontFamily: "IRANSans" }}
+                className={classes.linkStyle}
+              >
                 پایه (
                 {gradeParam === -1
                   ? "همه"
@@ -153,7 +177,11 @@ const Book = ({ numInCartHandler, posHandler }) => {
                 border: "4px solid rgb(147, 118, 0)",
               }}
             >
-              <Link to="/books/major" className={classes.linkStyle}>
+              <Link
+                to="/books/major"
+                style={{ fontFamily: "IRANSans" }}
+                className={classes.linkStyle}
+              >
                 رشته (
                 {majorParam === -1
                   ? "همه"
@@ -171,7 +199,11 @@ const Book = ({ numInCartHandler, posHandler }) => {
                 borderRadius: "0 50px 50px 0",
               }}
             >
-              <Link to="/books/publishes" className={classes.linkStyle}>
+              <Link
+                to="/books/publishes"
+                style={{ fontFamily: "IRANSans" }}
+                className={classes.linkStyle}
+              >
                 انتشارات(
                 {pubParam === -1
                   ? "همه"
@@ -191,9 +223,8 @@ const Book = ({ numInCartHandler, posHandler }) => {
                   major={majorParam}
                   publish={pubParam}
                   sort={sortParam}
-                  numInCartHandler={numInCartHandler}
-                  posHandler={posHandler}
                   key={index}
+                  setNumItems={setNumItems}
                   className={classes.books}
                 />
               </Grid>

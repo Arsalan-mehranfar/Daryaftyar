@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import {
   Grid,
@@ -106,15 +107,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 const CardItem = ({
-  num,
   auther_name,
   image_med,
   price,
   id,
   count_in_user_cart,
   onClickCallBack,
-  numInCartHandler,
-  posHandler,
+  setNumItems,
+  name,
 }) => {
   const controlCheckBoxData = useSelector((state) => state.checkBoxState);
   const controlRadioGroup = useSelector((state) => state.sortState);
@@ -129,6 +129,7 @@ const CardItem = ({
     : controlCheckBoxData.pubFilter.items.sort((a, b) => a < b).join(".");
   const sortParam = controlRadioGroup.empty ? 1 : controlRadioGroup.item;
   const [itemCount, setItemCount] = useState(count_in_user_cart);
+  const navigate = useNavigate();
   const incrementHandler = () => {
     axios({
       method: "post",
@@ -138,11 +139,9 @@ const CardItem = ({
         bid_in_cart: `+|${id}`,
       },
     })
-      .then((res) => console.log(res))
+      .then((res) => setNumItems(res.data.general.cart_items_count))
       .catch((err) => console.log(err));
     setItemCount(itemCount + 1);
-    posHandler(true);
-    numInCartHandler();
   };
   const decrementHandler = () => {
     axios({
@@ -153,11 +152,9 @@ const CardItem = ({
         bid_in_cart: `-|${id}`,
       },
     })
-      .then((res) => console.log(res))
+      .then((res) => setNumItems(res.data.general.cart_items_count))
       .catch((err) => console.log(err));
     setItemCount(itemCount - 1);
-    posHandler(false);
-    numInCartHandler();
     itemCount === 1 && onClickCallBack();
   };
   const classes = useStyles();
@@ -177,7 +174,12 @@ const CardItem = ({
                 }}
               >
                 <Grid container className={classes.specificContainer}>
-                  <Grid item xs={12} className={classes.imageContainer}>
+                  <Grid
+                    item
+                    xs={12}
+                    className={classes.imageContainer}
+                    onClick={() => navigate(`/books/${id}`, { replace: true })}
+                  >
                     <Box className={classes.boxStyle} />
                     <Avatar
                       className={classes.imageStyle}
@@ -188,13 +190,21 @@ const CardItem = ({
                   </Grid>
                   <Grid item xs={12} className={classes.txtContainer}>
                     <Grid item xs={12}>
-                      <Typography variant="body2" className={classes.textStyle}>
+                      <Typography
+                        variant="body2"
+                        style={{ fontFamily: "IRANSans" }}
+                        className={classes.textStyle}
+                      >
                         انتشارات : دریافت
                       </Typography>
                     </Grid>
                     <Grid item xs={12}>
-                      <Typography variant="body2" className={classes.nameStyle}>
-                        ریاضی
+                      <Typography
+                        variant="body2"
+                        style={{ fontFamily: "IRANSans" }}
+                        className={classes.nameStyle}
+                      >
+                        {name}
                       </Typography>
                     </Grid>
                   </Grid>
@@ -207,6 +217,7 @@ const CardItem = ({
                     <Grid item xs={12} className={classes.realPrice}>
                       <Typography
                         variant="body2"
+                        style={{ fontFamily: "IRANSans" }}
                         className={classes.priceStyle}
                       >
                         {Math.round(price)} تومان
@@ -257,17 +268,29 @@ const CardItem = ({
             </Grid>
             <Grid item xs={6} className={classes.rightSideContainer}>
               <Grid item xs={12}>
-                <Typography variant="body2" className={classes.text}>
-                  کتاب ریاضی
+                <Typography
+                  variant="body2"
+                  style={{ fontFamily: "IRANSans" }}
+                  className={classes.text}
+                >
+                  {name}
                 </Typography>
               </Grid>
               <Grid item xs={12}>
-                <Typography variant="body2" className={classes.text}>
+                <Typography
+                  variant="body2"
+                  style={{ fontFamily: "IRANSans" }}
+                  className={classes.text}
+                >
                   {auther_name}:نویسنده
                 </Typography>
               </Grid>
               <Grid item xs={12}>
-                <Typography variant="body2" className={classes.text}>
+                <Typography
+                  variant="body2"
+                  style={{ fontFamily: "IRANSans" }}
+                  className={classes.text}
+                >
                   انتشارات : دریافت
                 </Typography>
               </Grid>

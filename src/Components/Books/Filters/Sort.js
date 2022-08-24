@@ -115,7 +115,7 @@ const Sort = () => {
   const classes = useStyles();
   const items = useRef([]);
   const sortItem = useSelector((state) => state.sortState);
-  const selected = useSelector(state => state.checkBoxState)
+  const selected = useSelector((state) => state.checkBoxState);
   const firstItem = {
     id: "-1",
     name: "هیچکدام",
@@ -165,7 +165,9 @@ const Sort = () => {
     <Grid container className={classes.container}>
       <Grid item className={classes.headerContainer} xs={12} container>
         <Grid item xs={6} className={classes.headerStyle}>
-          <Typography variant="h4">Books</Typography>
+          <Typography style={{ fontFamily: "IRANSans" }} variant="h4">
+            Books
+          </Typography>
         </Grid>
         <Grid item xs={6} className={classes.headerStyle}>
           <NavigationIcon className={classes.iconStyle} />
@@ -176,7 +178,11 @@ const Sort = () => {
           className={classes.sortContainer}
           onClick={() => navigate("/books", { replace: true })}
         >
-          <Typography variant="body2" className={classes.parageraphStyle}>
+          <Typography
+            style={{ fontFamily: "IRANSans" }}
+            variant="body2"
+            className={classes.parageraphStyle}
+          >
             sort according to :
           </Typography>
         </Card>
@@ -209,7 +215,7 @@ const Sort = () => {
             <NavigationIcon className={classes.saveIcone} />
 
             <Typography variant="body2" className={classes.parageraphSaveStyle}>
-              save and back
+              ذخیره و بازگشت
             </Typography>
           </Grid>
         </Card>

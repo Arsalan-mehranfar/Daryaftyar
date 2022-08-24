@@ -100,7 +100,7 @@ const useStyles = makeStyles((theme) => ({
     cursor: "pointer",
   },
 }));
-const CartFinal = () => {
+const CartFinal = ({ setNumItems }) => {
   const [url, setUrl] = useState({});
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -108,11 +108,20 @@ const CartFinal = () => {
   useEffect(() => {
     dispatch(fetchCardDataFinal(341393410));
   }, []);
-  const { cart_details, pay_permission, wallet } = cartFinalData?.result;
-  const { credit_discount_final, final_price, total_price_of_items } =
-    cart_details || {};
+  const { cart_details, pay_permission, wallet, general } =
+    cartFinalData?.result;
+  const {
+    credit_discount_final,
+    final_price,
+    total_price_of_items,
+    total_discount_of_items,
+  } = cart_details || {};
+  const { cart_items_count } = general || {};
   const { credit } = wallet || {};
   const classes = useStyles();
+  useEffect(() => {
+    setNumItems(cart_items_count);
+  }, [cartFinalData]);
   const payHandler = () => {
     const fetchApi = async () => {
       const response = await axios.get(
@@ -139,10 +148,15 @@ const CartFinal = () => {
         xs={12}
       >
         <Grid item xs={6} className={classes.headerStyle}>
-          <Typography variant="h4">سبد خرید</Typography>
+          <Typography variant="h4" style={{ fontFamily: "IRANSans" }}>
+            سبد خرید
+          </Typography>
         </Grid>
         <Grid item xs={6} className={classes.headerStyle}>
-          <NavigationIcon className={classes.iconStyle} />
+          <NavigationIcon
+            className={classes.iconStyle}
+            onClick={() => navigate(-1, { replace: true })}
+          />
         </Grid>
       </Grid>
       <Grid item xs={12} container className={classes.explainStyle}>
@@ -156,14 +170,22 @@ const CartFinal = () => {
           </Button>
         </Grid>
         <Grid item xs={6} className={classes.rightSide}>
-          <Typography variant="body2" className={classes.txtStyle}>
-            محصول در سبد خرید شما موجود است {3}
+          <Typography
+            variant="body2"
+            style={{ fontFamily: "IRANSans" }}
+            className={classes.txtStyle}
+          >
+            محصول در سبد خرید شما موجود است {cart_items_count}
           </Typography>
         </Grid>
       </Grid>
       <Grid container xs={12} item className={classes.warningContainer}>
         <Grid item xs={12} className={classes.warningParagerph}>
-          <Typography variant="body2" className={classes.warningStyle}>
+          <Typography
+            variant="body2"
+            style={{ fontFamily: "IRANSans" }}
+            className={classes.warningStyle}
+          >
             نکته مهم :شما باید قبلا در ربات و از بخش اطلاعات پستی،اطلاعات حقیقی
             خود را ثبت کرده باشید تا ما بتوانیم محصولات رو ارسال کنیم اگر این
             کار را نکرده اد اجازه پرداخت نخواهید داشت
@@ -174,22 +196,47 @@ const CartFinal = () => {
         <Grid item xs={12} className={classes.paymentContainer}>
           <Box className={classes.priceStyle}>
             <Grid itex xs={12}>
-              <Typography variant="body2" className={classes.textPrice}>
+              <Typography
+                variant="body2"
+                style={{ fontFamily: "IRANSans" }}
+                className={classes.textPrice}
+              >
                 {total_price_of_items}:مجموع قیمت سبد خرید شما
               </Typography>
             </Grid>
             <Grid itex xs={12}>
-              <Typography variant="body2" className={classes.textPrice}>
-                {credit_discount_final} : تخفیف
+              <Typography
+                variant="body2"
+                style={{ fontFamily: "IRANSans" }}
+                className={classes.textPrice}
+              >
+                {total_discount_of_items} : مجموع تخفیف ها
               </Typography>
             </Grid>
             <Grid itex xs={12}>
-              <Typography variant="body2" className={classes.textPrice}>
+              <Typography
+                variant="body2"
+                style={{ fontFamily: "IRANSans" }}
+                className={classes.textPrice}
+              >
+                {credit_discount_final} : تخفیف نهایی کارت اعتباری
+              </Typography>
+            </Grid>
+            <Grid itex xs={12}>
+              <Typography
+                variant="body2"
+                style={{ fontFamily: "IRANSans" }}
+                className={classes.textPrice}
+              >
                 {credit} : اعتبار کارت
               </Typography>
             </Grid>
             <Grid itex xs={12} className={classes.finalPriceContainer}>
-              <Typography variant="body2" className={classes.textPrice}>
+              <Typography
+                variant="body2"
+                style={{ fontFamily: "IRANSans" }}
+                className={classes.textPrice}
+              >
                 {final_price} : پرداختی
               </Typography>
             </Grid>
@@ -202,7 +249,11 @@ const CartFinal = () => {
             <Card className={classes.sortContainer}>
               <Grid className={classes.sort} container>
                 <NavigationIcon className={classes.sortIcone} />
-                <Typography variant="body2" className={classes.parageraphStyle}>
+                <Typography
+                  variant="body2"
+                  style={{ fontFamily: "IRANSans" }}
+                  className={classes.parageraphStyle}
+                >
                   {final_price} : پرداختی
                 </Typography>
               </Grid>

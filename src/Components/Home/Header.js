@@ -16,12 +16,21 @@ const Header = ({ general }) => {
   return (
     <Grid className={classes.container}>
       <Grid item xs={12}>
-        <Typography variant="h6" className={classes.toRight}>
+        <Typography
+          variant="h6"
+          style={{ fontFamily: "IRANSans" }}
+          className={classes.toRight}
+          style={{ fontFamily: "IRANSans" }}
+        >
           سلام {name}
         </Typography>
       </Grid>
       <Grid item xs={12}>
-        <Typography variant="h4" className={classes.toRight}>
+        <Typography
+          variant="h4"
+          className={classes.toRight}
+          style={{ fontFamily: "IRANSans" }}
+        >
           ! به فروشگاه دریافت یار خوش امدید
         </Typography>
       </Grid>

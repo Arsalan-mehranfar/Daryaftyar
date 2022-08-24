@@ -154,7 +154,9 @@ const Grade = () => {
     <Grid container className={classes.container}>
       <Grid item className={classes.headerContainer} xs={12} container>
         <Grid item xs={6} className={classes.headerStyle}>
-          <Typography variant="h4">کتاب ها</Typography>
+          <Typography style={{ fontFamily: "IRANSans" }} variant="h4">
+            کتاب ها
+          </Typography>
         </Grid>
         <Grid item xs={6} className={classes.headerStyle}>
           <NavigationIcon className={classes.iconStyle} />
@@ -175,7 +177,11 @@ const Grade = () => {
           >
             <Link
               to="/books/grade"
-              style={{ color: "rgb(232, 232, 166)", textDecoration: "none" }}
+              style={{
+                color: "rgb(232, 232, 166)",
+                textDecoration: "none",
+                fontFamily: "IRANSans",
+              }}
             >
               تغییر پایه
             </Link>
@@ -188,7 +194,11 @@ const Grade = () => {
               border: "4px solid rgb(147, 118, 0)",
             }}
           >
-            <Link to="/books/major" className={classes.linkStyle}>
+            <Link
+              to="/books/major"
+              style={{ fontFamily: "IRANSans" }}
+              className={classes.linkStyle}
+            >
               رشته (
               {selectedGrades.majorFilter.allSelected
                 ? "همه"
@@ -206,7 +216,11 @@ const Grade = () => {
               borderRadius: "0 50px 50px 0",
             }}
           >
-            <Link to="/books/publishes" className={classes.linkStyle}>
+            <Link
+              to="/books/publishes"
+              style={{ fontFamily: "IRANSans" }}
+              className={classes.linkStyle}
+            >
               انتشارات(
               {selectedGrades.pubFilter.allSelected
                 ? "همه"
@@ -246,7 +260,11 @@ const Grade = () => {
           <Grid className={classes.sort} container>
             <NavigationIcon className={classes.sortIcone} />
 
-            <Typography variant="body2" className={classes.parageraphStyle}>
+            <Typography
+              style={{ fontFamily: "IRANSans" }}
+              variant="body2"
+              className={classes.parageraphStyle}
+            >
               ذخیره و بازگشت
             </Typography>
           </Grid>
