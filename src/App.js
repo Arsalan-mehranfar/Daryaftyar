@@ -18,6 +18,7 @@ import CartFinal from "./Components/CardItem/CartFinal";
 import Wallet from "./Components/Home/Wallet/Wallet";
 
 import "./App.css";
+import Back from "./Components/Back";
 function App() {
   const [numItems, setNumItems] = useState(0);
   return (
@@ -42,6 +43,8 @@ function App() {
                 path="/books"
                 element={<Book setNumItems={setNumItems} />}
               />
+              {/*for your tests uncomment line 47*/}
+              {/*<Route path="/back" element={<Back />} />*/}
               <Route path="/classes" element={<Class />} />
               <Route path="/books/grade" element={<Grade />} />
               <Route path="/books/major" element={<Major />} />

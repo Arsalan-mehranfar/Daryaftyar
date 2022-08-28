@@ -115,6 +115,7 @@ const CartFinal = ({ setNumItems }) => {
     final_price,
     total_price_of_items,
     total_discount_of_items,
+    post_cost,
   } = cart_details || {};
   const { cart_items_count } = general || {};
   const { credit } = wallet || {};
@@ -164,6 +165,7 @@ const CartFinal = ({ setNumItems }) => {
           <Button
             className={classes.btn}
             variant="contained"
+            style={{ fontFamily: "IRANSans" }}
             onClick={() => navigate("/card", { replace: true })}
           >
             مشاهده
@@ -229,6 +231,15 @@ const CartFinal = ({ setNumItems }) => {
                 className={classes.textPrice}
               >
                 {credit} : اعتبار کارت
+              </Typography>
+            </Grid>
+            <Grid itex xs={12}>
+              <Typography
+                variant="body2"
+                style={{ fontFamily: "IRANSans" }}
+                className={classes.textPrice}
+              >
+                هزینه پستی:{post_cost}
               </Typography>
             </Grid>
             <Grid itex xs={12} className={classes.finalPriceContainer}>
